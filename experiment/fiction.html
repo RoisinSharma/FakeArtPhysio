@@ -75,6 +75,31 @@
             },
         }
 
+        const demographics_data = {
+            type: jsPsychSurvey,
+            survey_json: {
+                title: "About yourself",
+            completeText: "Continue",
+            goNextPageAutomatic: false,
+            showQuestionNumbers: false,
+                    elements: [
+                        {
+                            title: "How knowledgeable would you say you are about art (e.g., how familiar with artistic styles, artists or movements)?",
+                            name: "Art_Expertise",
+                            type: "rating",
+                            displayMode: "buttons",
+                            isRequired: true,
+                        minRateDescription: "Not at all",
+                        maxRateDescription: "Very much so",
+                        rateValues: [0, 1, 2, 3, 4, 5, 6],
+                        },
+                    ],
+            },
+            data: {
+                screen: "demographics",
+            },
+        }
+
     // Initialize experiment =================================================
     
         var jsPsych = initJsPsych({
@@ -102,7 +127,7 @@
         //Demographics
         timeline.push(participant_ID)
         timeline.push(fullscreen_on) // Enter fullscreen mode
-        timeline.push(demographics_questions)
+        timeline.push(demographics_data)
 
         // Eye-tracking ==============================================================
         timeline.push(eyetracking_consent)
