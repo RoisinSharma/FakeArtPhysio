@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Task</title>
+
+        <!--Load JsPsych -->
+        <script src="https://unpkg.com/jspsych@8.2.2"></script>
+        <link
+            href="https://unpkg.com/jspsych@8.2.2/css/jspsych.css"
+            rel="stylesheet"
+            type="text/css"
+        />
+        
+        <!--Load plugins-->
+        <script src="https://unpkg.com/@jspsych/plugin-fullscreen@2.1.0"></script>
+        <script src="https://unpkg.com/@jspsych/plugin-survey@3.0.0"></script>
+        <script src="https://unpkg.com/@jspsych/plugin-html-button-response@2.1.0"></script>
+        <script src="https://unpkg.com/@jspsych/plugin-html-keyboard-response@2.1.0"></script>
+        <script src="https://unpkg.com/@jspsych/plugin-html-slider-response@2.1.0"></script>
+        <script src="https://unpkg.com/@jspsych/plugin-image-keyboard-response@2.1.0"></script>
+        <script src="https://unpkg.com/@jspsych/plugin-audio-button-response@2.1.0"></script>
+        <script src="https://unpkg.com/@jspsych/plugin-preload@2.1.0"></script>
+        <link
+            rel="stylesheet"
+            href="https://unpkg.com/@jspsych/plugin-survey@3.0.0/css/survey.css"
+        />
+
+        <!-- To save data via DataPipe (for online experiments) -->
+        <script src="https://unpkg.com/@jspsych-contrib/plugin-pipe@0.5.0"></script>
+
+        <!-- Eye Tracking -->
+        <script src="https://cdn.jsdelivr.net/gh/jspsych/jspsych@jspsych@8.1.0/examples/js/webgazer/webgazer.js"></script>
+        <script src="https://unpkg.com/@jspsych/extension-webgazer@1.1.0"></script>
+        <script src="https://unpkg.com/@jspsych/plugin-webgazer-init-camera@2.1.0"></script>
+        <script src="https://unpkg.com/@jspsych/plugin-webgazer-calibrate@2.1.0"></script>
+        <script src="https://unpkg.com/@jspsych/plugin-webgazer-validate@2.1.0"></script>
+
+        <!-- Custom scripts -->
+        <script src="stimuli/stimuli_list.js"></script>
+        <script src="fiction.js"></script>
+        <script src="demographics.js"></script>
+  </head>
+
+  <body></body>
+
+    <script>
+
+        var participant_ID = {
+            type: jsPsychSurvey,
+            survey_json: {
+                title: "About yourself",
+                completeText: "Continue",
+                pageNextText: "Next",
+                pagePrevText: "Previous",
+                goNextPageAutomatic: false,
+                showQuestionNumbers: false,
+                pages: [
+                    {
+                        elements: [
+                            {
+                                title: "Enter the participant's ID:",
+                                type: "text",
+                                placeholder: "000",
+                                name: "Participant_ID",
+                                isRequired: true,
+                            },
+                        ],
+                    },
+                ],
+            },
+            data: {
+                screen: "ppt_id",
+            },
+        }
+
+    // Initialize experiment =================================================
+    
+        var jsPsych = initJsPsych({
+             show_progress_bar: true,
+             message_progress_bar: "Progress",
+             auto_update_progress_bar: true,
+            extensions: [{ type: jsPsychExtensionWebgazer }],
+            on_finish: function () {
+                // Get participant ID
+                let participantID = jsPsych.data
+                    .get()
+                    .filter({ screen: "ppt_id" })
+                    .values()[0].response["Participant_ID"]
+
+                // Save as JSON file locally
+                jsPsych.data
+                    .get()
+                    .localSave("json", `${participantID}_fic.json`)
+            },
+        })
+
+        // Initialize timeline
+        var timeline = []
+
+        //Demographics
+        timeline.push(participant_ID)
+        timeline.push(fullscreen_on) // Enter fullscreen mode
+
+        timeline.push(fiction_preloadstims)
+
+        timeline.push({
+                    type: jsPsychHtmlButtonResponse,
+                    stimulus: "You've reached the end of this part!",
+                    on_start: function () {
+                        curr_progress = jsPsych.progressBar.progress;
+                        jsPsych.progressBar.progress = curr_progress + 0.4;
+                    },
+                    choices: ["Exit Fullscreen + Save Data"],
+                    on_finish: function () {
+                        document.exitFullscreen()
+                    },                    
+                })
+
+    // Run timeline ===========================================================
+        jsPsych.run(timeline)
+    </script>
+</html>
