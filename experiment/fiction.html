@@ -39,6 +39,8 @@
         <script src="stimuli/stimuli_list.js"></script>
         <script src="fiction.js"></script>
         <script src="demographics.js"></script>
+        <script src="eyetracking.js"></script>
+        <script src="questionnaires.js"></script>
   </head>
 
   <body></body>
@@ -100,16 +102,34 @@
         //Demographics
         timeline.push(participant_ID)
         timeline.push(fullscreen_on) // Enter fullscreen mode
+        timeline.push(demographics_questions)
 
+        // Eye-tracking ==============================================================
+        timeline.push(eyetracking_consent)
+        timeline.push(eyetracking_calibration)
         timeline.push(fiction_preloadstims)
+
+       // Fiction stage 1 ===========================================================
+        timeline.push(fiction_instructions1)
+        timeline.push(fiction_phase1a)
+        timeline.push(fiction_phase1_break)
+        timeline.push(eyetracking_recalibration)
+        timeline.push(fiction_phase1b)
+        timeline.push(fiction_feedback1a)
+        timeline.push(fiction_feedback1b)
+
+        //Questionnaires + Visualisation task =========================================
+        questionnaires = [questionnaire_vviq, bait]
+        questionnaires = jsPsych.randomization.shuffle(questionnaires) // Shuffle order of questionnaires
+        timeline.push(...questionnaires)
+
+        // Fiction stage 2 ===========================================================
+        timeline.push(fiction_instructions2)
+        timeline.push(fiction_phase2)
 
         timeline.push({
                     type: jsPsychHtmlButtonResponse,
                     stimulus: "You've reached the end of this part!",
-                    on_start: function () {
-                        curr_progress = jsPsych.progressBar.progress;
-                        jsPsych.progressBar.progress = curr_progress + 0.4;
-                    },
                     choices: ["Exit Fullscreen + Save Data"],
                     on_finish: function () {
                         document.exitFullscreen()

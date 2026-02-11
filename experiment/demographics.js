@@ -110,8 +110,176 @@ const demographics_consent = {
 }
 
 // Demographic info ========================================================================
+//for rs
+const demographics_questions1 = {
+    type: jsPsychSurvey,
+    survey_json: {
+        title: "About yourself",
+        completeText: "Continue",
+        pageNextText: "Next",
+        pagePrevText: "Previous",
+        goNextPageAutomatic: false,
+        showQuestionNumbers: false,
+        pages: [
+            // {
+            //     elements: [
+            //         {
+            //             title: "Enter the participant's ID:",
+            //             type: "text",
+            //             placeholder: "000",
+            //             name: "Participant_ID",
+            //             isRequired: true,
+            //         },
+            //     ],
+            // },
+            {
+                elements: [
+                    {
+                        title: "What is your gender?",
+                        name: "Gender",
+                        type: "radiogroup",
+                        // Should change other to prefer to self-describe ? (for ethical approval)
+                        choices: [
+                            "Male",
+                            "Female",
+                            "Other",
+                            "Prefer not to say",
+                        ],
+                        isRequired: true,
+                        colCount: 0,
+                    },
+                    {
+                        type: "text",
+                        title: "Please enter your age (in years)",
+                        name: "Age",
+                        isRequired: true,
+                        inputType: "number",
+                        min: 0,
+                        max: 100,
+                        placeholder: "e.g., 21",
+                        validators: [
+                            {
+                                type: "numeric",
+                                minValue: 18,
+                                maxValue: 100,
+                                text: "You must be at least 18 years old to participate.",
+                            },
+                        ],
+                    },
+                ],
+            },
+            {
+                elements: [
+                    {
+                        title: "What is your highest completed education level?",
+                        name: "Education",
+                        type: "radiogroup",
+                        choices: [
+                            {
+                                value: "Doctorate",
+                                text: "University (doctorate)",
+                            },
+                            {
+                                value: "Master",
+                                text: "University (master)", // "<sub><sup>or equivalent</sup></sub>",
+                            },
+                            {
+                                value: "Bachelor",
+                                text: "University (bachelor)", // "<sub><sup>or equivalent</sup></sub>",
+                            },
+                            {
+                                value: "High school",
+                                text: "High school",
+                            },
+                            {
+                                value: "Elementary school",
+                                text: "Elementary school",
+                            },
+                        ],
+                        showOtherItem: true,
+                        otherText: "Other",
+                        otherPlaceholder: "Please specify",
+                        isRequired: true,
+                        colCount: 1,
+                    },
+                    {
+                        visibleIf:
+                            "{Education} == 'Doctorate' || {Education} == 'Master' || {Education} == 'Bachelor'",
+                        title: "What is your discipline?",
+                        name: "Discipline",
+                        type: "radiogroup",
+                        choices: [
+                            "Arts and Humanities",
+                            "Literature, Languages",
+                            "History, Archaeology",
+                            "Sociology, Anthropology",
+                            "Political Science, Law",
+                            "Business, Economics",
+                            "Psychology, Neuroscience",
+                            "Medicine",
+                            "Biology, Chemistry, Physics",
+                            "Mathematics, Physics",
+                            "Engineering, Computer Science",
+                        ],
+                        showOtherItem: true,
+                        otherText: "Other",
+                        otherPlaceholder: "Please specify",
+                    },
+                    {
+                        visibleIf:
+                            "{Education} == 'High school' || {Education} == 'Master' || {Education} == 'Bachelor'",
+                        title: "Are you currently a student?",
+                        name: "Student",
+                        type: "boolean",
+                        swapOrder: true,
+                        isRequired: true,
+                    },
+                ],
+            },
+            {
+                elements: [
+                    {
+                        title: "How would you describe your ethnicity?",
+                        name: "Ethnicity",
+                        type: "radiogroup",
+                        choices: [
+                            "White",
+                            "Black",
+                            "Hispanic/Latino",
+                            "Middle Eastern/North African",
+                            "South Asian",
+                            "East Asian",
+                            "Southeast Asian",
+                            "Mixed",
+                            "Prefer not to say",
+                        ],
+                        showOtherItem: true,
+                        otherText: "Other",
+                        otherPlaceholder: "Please specify",
+                        isRequired: false,
+                        colCount: 1,
+                    },
+                    {
+                        title: "In which country are you currently living?",
+                        name: "Country",
+                        type: "dropdown",
+                        choicesByUrl: {
+                            url: "https://surveyjs.io/api/CountriesExample",
+                        },
+                        placeholder: "e.g., France",
+                        isRequired: false,
+                    },
+                ],
+            },
+        ],
+    },
+    data: {
+        screen: "demographic_questions1",
+    },
+}
 
 //Added 'other' and 'prefer not to say' to gender (not in FakeArt)
+//for fiction.js
 var demographics_questions = {
     type: jsPsychSurvey,
     survey_json: {
@@ -271,5 +439,75 @@ var demographics_questions = {
     },
     data: {
         screen: "demographic_questions",
+    },
+}
+
+// debriefing ========================================================================
+const experiment_feedback = {
+    type: jsPsychSurvey,
+    survey_json: {
+        title: "Feedback",
+        description:
+            "It is the end of the experiment! Don't hesitate to leave us a feedback." +
+            "After clicking 'Next', we will provide you with more information about the study.",
+        completeText: "Next",
+        showQuestionNumbers: false,
+        pages: [
+            {
+                elements: [
+                    {
+                        type: "rating",
+                        name: "Feedback_Enjoyment",
+                        title: "Did you enjoy doing this experiment?",
+                        isRequired: false,
+                        rateMin: 0,
+                        rateMax: 4,
+                        rateType: "stars",
+                    },
+                    {
+                        type: "comment",
+                        name: "Feedback_Text",
+                        title: "Anything else you would like to share with us?",
+                        isRequired: false,
+                    },
+                ],
+            },
+        ],
+    },
+    data: {
+        screen: "experiment_feedback",
+    },
+}
+
+const demographics_debriefing = {
+    type: jsPsychSurvey,
+    data: { screen: "debriefing" },
+    on_finish: function () {
+         document.exitFullscreen() },
+         data: { screen: "end_db" },
+    survey_json: {
+        showQuestionNumbers: false,
+        completeText: "Finish",
+        pages: [
+            {
+                elements: [
+                    {
+                        type: "html",
+                        name: "Debrief",
+                        html: `
+<img src='https://blogs.brighton.ac.uk/sussexwrites/files/2019/06/University-of-Sussex-logo-transparent.png' width='150px' align='right'/><br><br><br><br><br>
+<h3>Debriefing</h3>
+<p align='left'>
+The purpose of this study was actually to study the effect on perceived beauty of <i>believing</i> that the content is fake (AI-generated or forgery).
+Our hypothesis is that believing that something is AI-generated will primarily impact the perceived meaningfulness and desirability compared to the aesthetic appreciation.
+As we are primarily interested in your <i>beliefs</i> about reality, <b>all images were in fact taken from an existing database of real paintings</b> used in psychology research to study aesthetic judgments.
+We apologize for the necessary deception used in the instructions (as there were no AI-generated images!), and we hope that you understand its role in ensuring the validity of our experiment.</p>
+<p align='left'><b>Thank you again!</b> Your participation in this study will be kept completely confidential. If you have any questions or concerns about the project, please contact D.Makowski@sussex.ac.uk, A.Neves@sussex.ac.uk or RS843@sussex.ac.uk</p>
+<p>To complete your participation in this study, click on 'Finish' and <b style="color: red">wait until your responses have been successfully saved</b> before closing the tab.</p>`,
+                        },
+                    ],
+            },
+            
+        ],
     },
 }
