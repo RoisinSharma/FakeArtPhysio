@@ -517,9 +517,10 @@ const fiction_feedback1a = {
             <div style="flex: 2; text-align: center;">
                 <p>The next part includes some questionnaires.</p>
                 <p>It is important that you answer truthfully. Please read the statements carefully and answer according to what describes you best.</p>
+                <p>The experimenter will now remove the EDA for you.</p>
             </div>
             </div>
-            `                 //<p>The experimenter will now remove the EDA for you.</p>
+            `                 
           }
         ]
       }
