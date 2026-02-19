@@ -335,8 +335,8 @@ var fiction_fixation1b = {
 var fiction_showimage1 = {
     type: jsPsychImageKeyboardResponse,
     on_start: function () {
-        document.body.style.cursor = "none"
         document.body.style.backgroundColor = "white"
+        document.body.style.cursor = "none"
         create_marker(marker1, (color = "#010000ff"));
         sendMarker("1");
     },
