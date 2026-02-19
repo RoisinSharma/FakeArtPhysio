@@ -163,5 +163,15 @@
 
     // Run timeline ===========================================================
         jsPsych.run(timeline)
+
+    // Run: first sync then start experiment =================================================================
+        syncLSL()
+            .then(function () {
+                startExperiment()
+            })
+            .catch(function (err) {
+                console.warn("Proceeding without LSL sync (sync failed):", err)
+                startExperiment()
+            })
     </script>
 </html>

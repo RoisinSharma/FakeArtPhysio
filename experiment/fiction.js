@@ -1,3 +1,57 @@
+// -----------------------
+// LSL bridge (promise-based)
+// -----------------------
+var lslBaseTime = null
+
+function syncLSL() {
+    return new Promise(async function (resolve, reject) {
+        try {
+            let offsets = []
+            for (let i = 0; i < 3; i++) {
+                var startPerf = performance.now()
+                let resp = await fetch("http://139.184.128.202:5000/sync", { cache: "no-store" }) // change IPv4 address as appropriate
+                let text = await resp.text()
+                var lslTime = parseFloat(text)
+                var endPerf = performance.now()
+                var perfMid = (startPerf + endPerf) / 2
+                offsets.push(lslTime - perfMid / 1000)
+                await new Promise((r) => setTimeout(r, 100)) // Short delay between syncs
+            }
+            lslBaseTime = offsets.reduce((a, b) => a + b, 0) / offsets.length
+            console.log("LSL sync done (averaged):", lslBaseTime)
+            resolve(lslBaseTime)
+        } catch (e) {
+            console.error("LSL sync exception:", e)
+            reject(e)
+        }
+    })
+}
+
+function sendMarker(value = "1") {
+    // If not synced, still send marker (server will timestamp with local_clock())
+    if (lslBaseTime === null) {
+        console.warn("LSL not synced yet - sending without JS timestamp")
+        fetch("http://139.184.128.202:5000/marker?value=" + encodeURIComponent(value)) // change IPv4 address as appropriate
+            .then(function () {
+                console.log("sent marker (no-ts)", value)
+            })
+            .catch(function (err) {
+                console.error("Marker send error:", err)
+            })
+        return
+    }
+
+    var ts = lslBaseTime + performance.now() / 1000
+    var url = "http://139.184.128.202:5000/marker?value=" + encodeURIComponent(value) + "&ts=" + encodeURIComponent(ts) // change IPv4 address as appropriate
+    fetch(url)
+        .then(function () {
+            console.log("sent marker", value, "ts", ts)
+        })
+        .catch(function (err) {
+            console.error("Marker send error:", err)
+        })
+}
+
 // Condition assignment ============================================
 //Fisher-Yates-Shuffle
 function shuffleArray(array) {
@@ -43,6 +97,7 @@ function assignCondition(stimuli_list) {
 }
 
 // Function used to insert catch-trials ("what was the label?") in some trials
+//QUESTION- should we keep this (same as FakeArt, or add catch trial each time (to draw attention to label, as in FEP)?)
 function generateRandomNumbers(min, max, N) {
     return [...Array(max - min + 1).keys()]
         .map((i) => i + min)
@@ -279,6 +334,12 @@ var fiction_fixation1b = {
 
 var fiction_showimage1 = {
     type: jsPsychImageKeyboardResponse,
+    on_start: function () {
+        document.body.style.cursor = "none"
+        document.body.style.backgroundColor = "white"
+        create_marker(marker1, (color = "#010000ff"));
+        sendMarker("1");
+    },
     stimulus: function () {
         return "stimuli/stimuli/" + jsPsych.evaluateTimelineVariable("Item")
     },
@@ -305,6 +366,9 @@ var fiction_showimage1 = {
     },
     on_finish: function () {
         fiction_trialnumber += 1
+        document.querySelector("#marker1").remove()
+        sendMarker("0");
+        document.body.style.cursor = "auto"
     },
     extensions: [
         {
@@ -544,6 +608,12 @@ var fiction_fixation2 = {
 
 var fiction_showimage2 = {
     type: jsPsychImageKeyboardResponse,
+    on_start:function(){
+    document.body.style.cursor = "none"
+    document.body.style.backgroundColor = "white"
+    create_marker(marker1, (color = "#010000ff"));
+    sendMarker("1");
+    },
     stimulus: function () {
         return "stimuli/stimuli/" + jsPsych.evaluateTimelineVariable("Item")
     },
@@ -568,6 +638,9 @@ var fiction_showimage2 = {
     },
     on_finish: function () {
         fiction_trialnumber += 1
+        document.querySelector("#marker1").remove()
+        sendMarker("0");
+        document.body.style.cursor = "auto"
     },
 }
 
