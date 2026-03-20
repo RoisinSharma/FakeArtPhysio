@@ -2,7 +2,7 @@
 <html>
     <head>
         <!--create title shown in tab; not the same as header on webpage-->
-        <title>Experiment</title>
+        <title>FAPhysio</title>
 
         <!--Load JsPsych -->
         <script src="https://unpkg.com/jspsych@8.2.2"></script>
@@ -125,33 +125,33 @@
         // Voluntary External Tapping
         timeline.push(VoluntaryExternal_instructions)
         timeline.push(TAP_countdown)
-        timeline.push(makeTAPblock(3, "external")) //change number back to 40 for testing
+        timeline.push(makeTAPblock(40, "external")) //change number back to 40 for testing
 
         // Voluntary Internal Tapping
         timeline.push(VoluntaryInternal_instructions)
         timeline.push(TAP_countdown)
-        timeline.push(makeTAPblock(3, "internal")) //change number back to 40 for testing
+        timeline.push(makeTAPblock(40, "internal")) //change number back to 40 for testing
 
         // Mixed Trials
         timeline.push(Mixedtrials_instructions)
         timeline.push(TAP_countdown)
-        timeline.push(makeTAPblock(3, "mixed")) //change number back to 80 for testing
+        timeline.push(makeTAPblock(80, "mixed")) //change number back to 80 for testing
 
         // Rhythmic Tapping
         timeline.push(TAP_preload)
         timeline.push(RhytmicTapping_instructions)
         timeline.push(TAP_countdown)
         timeline.push(TAP_beep_sequence) // Synchrony phase
-        timeline.push(create_TAP_sequence("Tap_Synchrony", 3)) //change number back to 120 for testing
+        timeline.push(create_TAP_sequence("Tap_Synchrony", 120)) //change number back to 120 for testing
 
         // Random Tapping
         timeline.push(RhytmicRandom_instructions)
         timeline.push(TAP_countdown)
-        timeline.push(create_TAP_sequence("TAP_random", 3)) //change number back to 120 for testing
+        timeline.push(create_TAP_sequence("TAP_random", 120)) //change number back to 120 for testing
 
         // Heart Tapping
         timeline.push(HeartTapping_Instructions)
-        timeline.push(create_TAP_sequence("TAP_heart", 3)) //change number back to 120 for testing
+        timeline.push(create_TAP_sequence("TAP_heart", 120)) //change number back to 120 for testing
 
 
         //HCT ===============================
@@ -160,16 +160,12 @@
             timeline: [
                 HCT_instructions,
                 {
-                    timeline: [
+                    timeline: jsPsych.randomization.shuffle(HCT_durations).flatMap((i) => [
                         HCT_countdown,
-                        HCT_interval(),
+                        HCT_interval(i * 1000),
                         HCT_beep,
                         HCT_items,
-                    ],
-                    timeline_variables: HCT_durations.map((i) => ({
-                        duration: i * 1000,
-                    })),
-                    randomize_order: true,
+                    ]),
                 },
             ],
         }
