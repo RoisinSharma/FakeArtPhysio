@@ -663,11 +663,6 @@ const ctap_trial = {
         return {
             screen: jsPsych.evaluateTimelineVariable("screen"),
             trial_number: jsPsych.evaluateTimelineVariable("trial_number"),
-            start_angle: jsPsych.evaluateTimelineVariable("start_angle"),
-            target_angle: jsPsych.evaluateTimelineVariable("target_angle"),
-            condition: jsPsych.evaluateTimelineVariable("condition"),
-            difficulty: jsPsych.evaluateTimelineVariable("difficulty"),
-            duration: jsPsych.evaluateTimelineVariable("duration"),
         }
     }
 }
