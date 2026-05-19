@@ -53,7 +53,12 @@ function sendMarker(value = "1") {
 }
 
 // HBC duration in sec
+<<<<<<< Updated upstream
 var HCT_durations = [20, 25, 30, 35, 40, 45]
+=======
+var HCT_durations = [20, 25, 30, 35, 40, 45] //USE THIS DURING DATA COLLECTION
+//var HCT_durations = [1, 1, 1, 1, 1, 1] // FOR TESTING PURPOSES ONLY 
+>>>>>>> Stashed changes
 
 // Instructions
 const HCT_instructions = {
