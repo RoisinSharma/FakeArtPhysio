@@ -9,7 +9,7 @@ function syncLSL() {
             let offsets = []
             for (let i = 0; i < 3; i++) {
                 var startPerf = performance.now()
-                let resp = await fetch("http://139.184.128.202:5001/sync", { cache: "no-store" }) // change IPv4 address as appropriate
+                let resp = await fetch("http://139.184.128.150:5001/sync", { cache: "no-store" }) // change IPv4 address as appropriate
                 let text = await resp.text()
                 var lslTime = parseFloat(text)
                 var endPerf = performance.now()
@@ -31,7 +31,7 @@ function sendMarker(value = "1") {
     // If not synced, still send marker (server will timestamp with local_clock())
     if (lslBaseTime === null) {
         console.warn("LSL not synced yet - sending without JS timestamp")
-        fetch("http://139.184.128.202:5001/marker?value=" + encodeURIComponent(value)) // change IPv4 address as appropriate
+        fetch("http://139.184.128.150:5001/marker?value=" + encodeURIComponent(value)) // change IPv4 address as appropriate
             .then(function () {
                 console.log("sent marker (no-ts)", value)
             })
@@ -42,7 +42,7 @@ function sendMarker(value = "1") {
     }
 
     var ts = lslBaseTime + performance.now() / 1000
-    var url = "http://139.184.128.202:5001/marker?value=" + encodeURIComponent(value) + "&ts=" + encodeURIComponent(ts) // change IPv4 address as appropriate
+    var url = "http://139.184.128.150:5001/marker?value=" + encodeURIComponent(value) + "&ts=" + encodeURIComponent(ts) // change IPv4 address as appropriate
     fetch(url)
         .then(function () {
             console.log("sent marker", value, "ts", ts)
@@ -102,7 +102,7 @@ function generateRandomNumbers(min, max, N) {
     return [...Array(max - min + 1).keys()]
         .map((i) => i + min)
         .sort(() => Math.random() - 0.5)
-        .slice(0, N)
+        .slice(0, N) //have commented out slice for test, QUESTION- should this be commented out?
         .sort((a, b) => a - b) // Sort the numbers in ascending order
 }
 
@@ -512,7 +512,7 @@ var t_fiction_ratings1_nocheck = {
 }
 
 var fiction_phase1a = {
-    timeline_variables: stimuli.slice(0, Math.ceil(stimuli.length / 2)).slice(0, 2), // <---------------------------- TODO: remove the extra slicing added for testing
+    timeline_variables: stimuli.slice(0, Math.ceil(stimuli.length / 2)), //.slice(0, 2), // <---------------------------- TODO: remove the extra slicing added for testing
     timeline: [
         fiction_fixation1a,
         fiction_cue,
@@ -548,7 +548,7 @@ const fiction_phase1_break = {
 }
 
 var fiction_phase1b = {
-    timeline_variables: stimuli.slice(Math.ceil(stimuli.length / 2), stimuli.length).slice(0, 2), // <---------------------------- TODO: remove the extra slicing added for testing
+    timeline_variables: stimuli.slice(Math.ceil(stimuli.length / 2), stimuli.length), //.slice(0, 2), // <---------------------------- TODO: remove the extra slicing added for testing
     timeline: [
         fiction_fixation1a,
         fiction_cue,
@@ -717,7 +717,7 @@ var fiction_ratings2 = {
 }
 
 var fiction_phase2 = {
-    timeline_variables: shuffleArray(stimuli).slice(0, 2), // <------------------------------------------------------------------------ TODO: remove this
+    timeline_variables: shuffleArray(stimuli), //.slice(0, 2), // <------------------------------------------------------------------------ TODO: remove this
     timeline: [fiction_fixation2, fiction_showimage2, fiction_ratings2],
 }
 
