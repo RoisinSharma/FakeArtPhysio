@@ -32,37 +32,38 @@ const demographics_consent = {
                      <h1>Information Sheet</h1>
                     <p><b>Invitation to Take Part</b><br>
                     Thank you for considering to take part in this study that aims at deepening our understanding of human perception. 
-                    This study is being conducted by Dr Dominique Makowski, and his team, from the <b>University of Sussex</b>, who are happy to be contacted if you have any questions (see contact information below).</p>
+                    This study is being conducted by Dr. Dominique Makowski, and his team, from the <b>University of Sussex</b>, who are happy to be contacted if you have any questions (see contact information below).</p>
 
                     <p><b>Why have I been invited and what will I do?</b><br>
                     The goal is to study how new technology can impact <b>human appreciation of art</b>.
                     In this study, you will complete a visual task where you will view and rate artworks. Then you will complete some tasks and questionnaires, including a short one about mood. 
-                    We will also measure your physiological processes to assess the relationship between how you experience your body and how you perceive these images.</p>
+                    We will also measure your physiological activity to assess the relationship between how you experience your body and how you perceive these images. The whole experiment will take roughly <b style='color:#FF5722;'>2 hours</b> to complete, from setting up physiological sensors to the debriefing.</p>
                         
                     <p><b>Do I have to take part?</b><br>
                     Your participation is entirely voluntary. You are free to choose not to take part, or to withdraw at any stage without having to give a reason and without being penalised in any way.
                     If you choose to take part, you will be asked to provide your consent electronically before starting the study.
                     As we are not collecting any personally identifiable information, it will not be possible to withdraw your data after you submit it.
                     
-                        <p><b>Physiological Signals</b><br>
-                    We will be recording some of your body's electric activity using ECG, EEG and EDA; both are simple non-intrusive procedures used in research and in the life sciences. 
-                    Since this study is being undertaken for research purposes only, we will not be able to provide any feedback or information on clinical aspects of the data obtained. 
-                    For the ECG we will be attaching some sensors to the skin, and for the EEG we will be using the Muse headset which contains electrodes that will be placed on your forehead and behind the ears. 
-                    We kindly ask that you refrain from participating if you are aware of having skin reactions or allergies to adhesives or the materials used in the electrodes - primarily composed of silver and silver chloride.</p>
+                    <p><b>Physiological Signals</b><br>
+                    We will be recording some of your body's electrical activity using ECG, EEG, and EDA, which are simple non-intrusive procedures used in research and in the life sciences. ECG (electrocardiography) measures electrical activity from the heart, EEG (electroencephalography) measures signals from the brain, and EDA (electrodermal activity) measures electrical properties of the skin.
+                    We will also be using a respiration belt, placed around the chest, to measure breathing patterns. 
+                    For the ECG and EDA we will be attaching some sensors to the skin, and for the EEG we will be using the Muse headset which contains electrodes that will be placed on your forehead and behind the ears. 
+                    We kindly ask that you refrain from participating if you are aware of having skin reactions or allergies to adhesives or the materials used in the electrodes - primarily composed of silver and silver chloride.
+                    </p>
 
                     <p><b>What will happen to the results and my personal information?</b><br>
                     The results of this research may be written into a scientific publication. Your anonymity will be ensured in the way described in the consent information below. 
                     <b>Please read this information carefully</b> and then, if you wish to take part, please acknowledge that you have fully understood this sheet, and that you consent to take part in the study as it is described here.</p>
                     
                     <p><b>Who has approved this study?</b><br>
-                    This study has been approved by the Faculty Research Ethics Committee: Science, Engineering and Technology, and the project reference number is xxxx.
+                    This study has been approved by the Faculty Research Ethics Committee: Science, Engineering and Technology, and the project reference number is 2026-2052-3163.
                     
                     <p><b>Insurance</b><br>  
                     The University of Sussex has insurance in place to cover its legal liabilities in respect of this study.
 
                     <p><b>Contact for Further Information</b><br>  
-                    For further information about this research, or if you have any concerns, please contact Dr Dominique Makowski 
-                    (<i style='color:DodgerBlue;'>D.Makowski@sussex.ac.uk</i>), Ana Neves (<i style='color:DodgerBlue;'>A.Neves@sussex.ac.uk</i>) or Róisín Sharma (<i style='color:DodgerBlue;'>rs843@sussex.ac.uk</i>).
+                    For further information about this research, or if you have any concerns, please contact Dr. Dominique Makowski 
+                    (<i style='color:DodgerBlue;'>D.Makowski@sussex.ac.uk</i>), Ana Neves (<i style='color:DodgerBlue;'>A.Neves@sussex.ac.uk</i>), or Roisin Sharma (<i style='color:DodgerBlue;'>rs843@sussex.ac.uk</i>).
                     If you have any concerns about the way in which the study has been conducted, you should contact the SEMSET Faculty Research Ethics Committee at <i style='color:DodgerBlue;'>frecsemset@sussex.ac.uk</i>.
                     
                 
